@@ -70,6 +70,10 @@ a {
   text-decoration:none;
   color:inherit;
 }
+// 화면에 스크롤 안보이게
+::-webkit-scrollbar{
+  display: none;
+}
 `;
 
 const client = new QueryClient();
