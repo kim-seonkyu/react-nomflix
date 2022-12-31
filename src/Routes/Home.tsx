@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getMovies, IGetMoviesResult } from "../api";
 import useWindowDimensions from "../useWindowDimensions";
@@ -8,6 +9,7 @@ import { makeImagePath } from "../utils";
 
 const Wrapper = styled.div`
   background: black;
+  padding-bottom: 200px;
   // 화면 x 좌표(좌우)가 늘어나면서 생기는 스크롤바를 숨겨줌
   /* overflow-x: hidden; */
 `;
@@ -42,13 +44,13 @@ const Overview = styled.p`
 
 const Slider = styled.div`
   position: relative;
-  top: -200px;
+  top: -150px;
 `;
 
 const Row = styled(motion.div)`
   display: grid;
   gap: 5px;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   position: absolute;
   width: 100%;
 `;
@@ -59,25 +61,56 @@ const Box = styled(motion.div)<{ bgPhoto: string }>`
   background-size: cover;
   background-position: center center;
   height: 200px;
-  color: red;
   font-size: 30px;
+  cursor: pointer;
+  &:first-child {
+    transform-origin: center left;
+  }
+  &:last-child {
+    transform-origin: center right;
+  }
 `;
 
-/* 
-const rowVariants = {
-  hidden: {
-    x: window.outerWidth - 10,
+const Info = styled(motion.div)`
+  padding: 10px;
+  background-color: ${(props) => props.theme.black.lighter};
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  h4 {
+    text-align: center;
+    font-size: 16px;
+  }
+`;
+
+const boxVariants = {
+  normal: {
+    scale: 1,
   },
-  visible: {
-    x: 0,
-  },
-  exit: {
-    x: -window.outerWidth + 10,
+  hover: {
+    scale: 1.3,
+    y: -40,
+    transition: {
+      delay: 0.5,
+      duaration: 0.1,
+      type: "tween",
+    },
   },
 };
- */
 
-const offset = 5;
+const infoVariants = {
+  hover: {
+    opacity: 1,
+    transition: {
+      delay: 0.5,
+      duaration: 0.1,
+      type: "tween",
+    },
+  },
+};
+
+const offset = 6;
 
 function Home() {
   const { data, isLoading } = useQuery<IGetMoviesResult>(
@@ -114,10 +147,6 @@ function Home() {
           <Slider>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
               <Row
-                /* variants={rowVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit" */
                 initial={{ x: width - 10 }}
                 animate={{ x: 0 }}
                 exit={{ x: -width + 10 }}
@@ -130,10 +159,18 @@ function Home() {
                   .map((movie) => (
                     <Box
                       key={movie.id}
+                      whileHover="hover"
+                      initial="normal"
+                      variants={boxVariants}
+                      transition={{ type: "tween" }}
                       bgPhoto={makeImagePath(
                         movie.backdrop_path || movie.poster_path
                       )}
-                    />
+                    >
+                      <Info variants={infoVariants}>
+                        <h4>{movie.title}</h4>
+                      </Info>
+                    </Box>
                   ))}
               </Row>
             </AnimatePresence>
