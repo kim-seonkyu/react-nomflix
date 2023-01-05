@@ -1,7 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import { motion, useScroll } from "framer-motion";
-import { useState } from "react";
-import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   getNowPlayingMovies,
@@ -98,38 +95,7 @@ function Home() {
               listType={"topRate"}
             ></Slider>
           </SliderArea>
-
-          {/*  <AnimatePresence>
-            {bigMovieMatch ? (
-              <>
-                <Overlay
-                  onClick={onOverlayClick}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                />
-                <BigMovie
-                  style={{ top: scrollY.get() + 100 }}
-                  layoutId={bigMovieMatch.params.movieId}
-                >
-                  {clickedMovie && (
-                    <>
-                      <BigCover
-                        style={{
-                          backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent),url(${makeImagePath(
-                            clickedMovie.backdrop_path,
-                            "w500"
-                          )})`,
-                        }}
-                      />
-                      <BigTitle>{clickedMovie.title}</BigTitle>
-                      <BigOverview>{clickedMovie.overview}</BigOverview>
-                    </>
-                  )}
-                </BigMovie> */}
         </>
-        /*   ) : null}
-          </AnimatePresence> */
-        /*     </> */
       )}
     </Wrapper>
   );

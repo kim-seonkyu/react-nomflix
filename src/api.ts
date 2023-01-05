@@ -20,24 +20,25 @@ export interface IGetMoviesResult {
   otal_pages: number;
   otal_results: number;
 }
+// Home - nowplaying Movie
 export function getNowPlayingMovies() {
   return fetch(
     `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
-
+// Home - upcoming Movie
 export function getUpComingMovies() {
   return fetch(
     `${BASE_PATH}/movie/upcoming?api_key=${API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
-
+// Home - popular Movie
 export function getPopularMovies() {
   return fetch(
     `${BASE_PATH}/movie/popular?api_key=${API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
-
+// Home - top_rated Movie
 export function getToprateMovies() {
   return fetch(
     `${BASE_PATH}/movie/top_rated?api_key=${API_KEY}${LANGUAGE_REGION}`
@@ -61,6 +62,7 @@ export interface IGetDetailData {
   title?: string;
   vote_average?: number;
 }
+// modal - detaildata
 export function getDetailData(requestUrl: string, movieId: number) {
   return fetch(
     `${BASE_PATH}/${requestUrl}/${movieId}?api_key=${API_KEY}${LANGUAGE_REGION}`
