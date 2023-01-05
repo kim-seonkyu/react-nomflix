@@ -1,12 +1,14 @@
 # Netflix Clone
 
 ## 기술
-  1. React & TypeScript
-  2. React-Router-Dom v6
-  3. Recoil 
-  4. React-Query
-  5. Framer-Motion
-  6. Styled-Components
+  - React & TypeScript
+  - React-Router-Dom v6
+  - Recoil 
+  - React-Query
+  - Framer-Motion
+  - Styled-Components
+  - React-Hook_Form
+  - React-Icons
   
   
 ## 구현 
