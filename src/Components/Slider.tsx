@@ -4,7 +4,6 @@ import { useState } from "react";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { IGetMoviesResult } from "../api";
 import { makeImagePath } from "../utils";
-import useWindowDimensions from "../useWindowDimensions";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 

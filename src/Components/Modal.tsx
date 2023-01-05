@@ -189,31 +189,6 @@ const ModalItem = styled.li`
   margin-bottom: 2rem;
 `;
 
-const ItemTitle = styled.span`
-  float: left;
-  width: 10rem;
-  margin-right: 1rem;
-  font-size: 1.8rem;
-  font-weight: 700;
-`;
-
-const ItemValue = styled.div`
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-  .channel {
-    float: left;
-    height: 2rem;
-  }
-  .channel ~ .channel {
-    margin-left: 2rem;
-  }
-`;
-
-const Clear = styled.div`
-  clear: both;
-  margin-bottom: 2rem;
-`;
-
 interface IModal {
   movieId: number;
   menuName: string;
