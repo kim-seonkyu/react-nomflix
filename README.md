@@ -1,5 +1,8 @@
 # Netflix Clone
 
+![Home](https://user-images.githubusercontent.com/64760329/210740884-5409ba8a-3164-434a-9c24-eb1bbff73207.png)
+
+
 ## 기술
   - React & TypeScript
   - React-Router-Dom v6
