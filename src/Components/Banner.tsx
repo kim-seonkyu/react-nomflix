@@ -38,7 +38,7 @@ interface IBanner {
   hovercolor: string;
 }
 
-const Bannerbtn = styled(motion.button)<IBanner>`
+const BannerBtn = styled(motion.button)<IBanner>`
   padding: 10px;
   display: flex;
   align-items: center;
@@ -54,15 +54,15 @@ const Bannerbtn = styled(motion.button)<IBanner>`
   }
 `;
 
-const Playbtn = styled(Bannerbtn)`
+const PlayBtn = styled(BannerBtn)`
   width: 140px;
 `;
 
-const Detailbtn = styled(Bannerbtn)`
+const DetailBtn = styled(BannerBtn)`
   width: 140px;
 `;
 
-const Btnicon = styled.div`
+const BtnIcon = styled.div`
   width: 28px;
   height: 30px;
   display: flex;
@@ -74,7 +74,7 @@ const Btnicon = styled.div`
   }
 `;
 
-const Btntext = styled.div`
+const BtnText = styled.div`
   font-size: 15px;
   font-weight: 400;
 `;
@@ -85,26 +85,26 @@ function Banner({ banner }: { banner: IMovie }) {
       <Title>{banner.title ? banner.title : banner.original_title}</Title>
       <Overview>{banner.overview}</Overview>
       <ButtonArea>
-        <Playbtn
+        <PlayBtn
           color={"#141414"}
           bgcolor={"rgba(255, 255, 255, 1)"}
           hovercolor={"rgba(255, 255, 255, 0.7)"}
         >
-          <Btnicon>
+          <BtnIcon>
             <AiFillCaretRight />
-          </Btnicon>
-          <Btntext>재생</Btntext>
-        </Playbtn>
-        <Detailbtn
+          </BtnIcon>
+          <BtnText>재생</BtnText>
+        </PlayBtn>
+        <DetailBtn
           color={"#FFFFFF"}
           bgcolor={"rgba(107, 107, 107, 0.7)"}
           hovercolor={"rgba(107, 107, 107, 0.3)"}
         >
-          <Btnicon>
+          <BtnIcon>
             <AiOutlineInfoCircle />
-          </Btnicon>
-          <Btntext>상세 정보</Btntext>
-        </Detailbtn>
+          </BtnIcon>
+          <BtnText>상세 정보</BtnText>
+        </DetailBtn>
       </ButtonArea>
     </Wrapper>
   );

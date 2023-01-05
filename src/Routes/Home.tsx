@@ -1,15 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
-import { motion, AnimatePresence, useScroll } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { useState } from "react";
-import { useMatch, useNavigate } from "react-router-dom";
+import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { getMovies, IGetMoviesResult, IMovie } from "../api";
+import {
+  getNowPlayingMovies,
+  getUpComingMovies,
+  IGetMoviesResult,
+  IMovie,
+} from "../api";
 import Banner from "../Components/Banner";
+import Slider from "../Components/Slider";
 import useWindowDimensions from "../useWindowDimensions";
-import { makeImagePath } from "../utils";
 
 const Wrapper = styled.div`
-  background: black;
+  background: #000;
   padding-bottom: 200px;
   // 화면 x 좌표(좌우)가 늘어나면서 생기는 스크롤바를 숨겨줌
   /* overflow-x: hidden; */
@@ -22,46 +27,9 @@ const Loader = styled.div`
   align-items: center;
 `;
 
-const Slider = styled.div`
+const SliderArea = styled.div`
   position: relative;
-  top: -150px;
-`;
-
-const Row = styled(motion.div)`
-  display: grid;
-  gap: 5px;
-  grid-template-columns: repeat(6, 1fr);
-  position: absolute;
-  width: 100%;
-`;
-
-const Box = styled(motion.div)<{ $bgPhoto: string }>`
-  background-color: white;
-  background-image: url(${(props) => props.$bgPhoto});
-  background-size: cover;
-  background-position: center center;
-  height: 200px;
-  font-size: 30px;
-  cursor: pointer;
-  &:first-child {
-    transform-origin: center left;
-  }
-  &:last-child {
-    transform-origin: center right;
-  }
-`;
-
-const Info = styled(motion.div)`
-  padding: 10px;
-  background-color: ${(props) => props.theme.black.lighter};
-  opacity: 0;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  h4 {
-    text-align: center;
-    font-size: 16px;
-  }
+  margin-top: 130px;
 `;
 
 const Overlay = styled(motion.div)`
@@ -107,65 +75,47 @@ const BigOverview = styled.p`
   color: ${(props) => props.theme.white.lighter};
 `;
 
-const boxVariants = {
-  normal: {
-    scale: 1,
-  },
-  hover: {
-    scale: 1.3,
-    y: -40,
-    transition: {
-      delay: 0.5,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
-};
-
-const infoVariants = {
-  hover: {
-    opacity: 1,
-    transition: {
-      delay: 0.5,
-      duaration: 0.1,
-      type: "tween",
-    },
-  },
-};
-
 const offset = 6;
 
 function Home() {
   const navigate = useNavigate();
-  const bigMovieMatch = useMatch("/movies/:movieId");
+  const bigMovieMatch: PathMatch<"movieId"> | null =
+    useMatch("/movies/:movieId");
   const { scrollY } = useScroll();
-  const { data, isLoading } = useQuery<IGetMoviesResult>(
+
+  const { data: nowPlaying, isLoading } = useQuery<IGetMoviesResult>(
     ["movies", "nowPlaying"],
-    getMovies
+    getNowPlayingMovies
   );
+
+  const { data: upComing } = useQuery<IGetMoviesResult>(
+    ["movies", "upComing"],
+    getUpComingMovies
+  );
+
   const [index, setIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
-  const increaseIndex = () => {
-    if (data) {
-      if (leaving) return;
-      toggleLeaving();
-      const totalMovies = data.results.length - 1;
-      const maxIndex = Math.ceil(totalMovies / offset) - 1;
-      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-    }
-  };
-  const toggleLeaving = () => setLeaving((prev) => !prev);
-  const width = useWindowDimensions();
-  const onBoxClicked = (movieId: number) => {
-    navigate(`/movies/${movieId}`);
-  };
-  const onOverlayClick = () => navigate(-1);
-  const clickedMovie =
-    bigMovieMatch?.params.movieId &&
-    data?.results.find(
-      (movie) => movie.id + "" === bigMovieMatch.params.movieId
-    );
-  console.log(clickedMovie);
+  // const increaseIndex = () => {
+  //   if (data) {
+  //     if (leaving) return;
+  //     toggleLeaving();
+  //     const totalMovies = data.results.length - 1;
+  //     const maxIndex = Math.ceil(totalMovies / offset) - 1;
+  //     setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+  //   }
+  // };
+  // const toggleLeaving = () => setLeaving((prev) => !prev);
+  // const width = useWindowDimensions();
+  // const onBoxClicked = (movieId: number) => {
+  //   navigate(`/movies/${movieId}`);
+  // };
+  // const onOverlayClick = () => navigate(-1);
+  // const clickedMovie =
+  //   bigMovieMatch?.params.movieId &&
+  //   data?.results.find(
+  //     (movie) => movie.id + "" === bigMovieMatch.params.movieId
+  //   );
+  // console.log(clickedMovie);
 
   return (
     <Wrapper>
@@ -173,8 +123,19 @@ function Home() {
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner banner={data?.results[0] as IMovie} />
-          <Slider>
+          <Banner banner={nowPlaying?.results[0] as IMovie} />
+          <SliderArea>
+            <Slider
+              data={nowPlaying as IGetMoviesResult}
+              title={"현재 상영 중인 영화"}
+            ></Slider>
+
+            <Slider
+              data={upComing as IGetMoviesResult}
+              title={"개봉 예정 영화"}
+            ></Slider>
+          </SliderArea>
+          {/* <Slider>
             <AnimatePresence initial={false} onExitComplete={toggleLeaving}>
               <Row
                 initial={{ x: width - 10 }}
@@ -206,8 +167,9 @@ function Home() {
                   ))}
               </Row>
             </AnimatePresence>
-          </Slider>
-          <AnimatePresence>
+          </Slider> */}
+
+          {/*  <AnimatePresence>
             {bigMovieMatch ? (
               <>
                 <Overlay
@@ -233,11 +195,11 @@ function Home() {
                       <BigOverview>{clickedMovie.overview}</BigOverview>
                     </>
                   )}
-                </BigMovie>
-              </>
-            ) : null}
-          </AnimatePresence>
+                </BigMovie> */}
         </>
+        /*   ) : null}
+          </AnimatePresence> */
+        /*     </> */
       )}
     </Wrapper>
   );
