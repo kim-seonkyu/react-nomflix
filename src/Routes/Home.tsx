@@ -68,7 +68,7 @@ function Home() {
               title={"현재 상영 중인 영화"}
               menuName={"home"}
               mediaType={"movie"}
-              listType={"nowPlaying"}
+              listType={"now_playing"}
             ></Slider>
 
             <Slider
@@ -76,7 +76,7 @@ function Home() {
               title={"개봉 예정 영화"}
               menuName={"home"}
               mediaType={"movie"}
-              listType={"upComing"}
+              listType={"upcoming"}
             ></Slider>
 
             <Slider
@@ -92,7 +92,7 @@ function Home() {
               title={"별점이 높은 영화"}
               menuName={"home"}
               mediaType={"movie"}
-              listType={"topRate"}
+              listType={"top_rate"}
             ></Slider>
           </SliderArea>
         </>

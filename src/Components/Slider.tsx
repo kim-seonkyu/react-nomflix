@@ -229,6 +229,7 @@ export default function Slider({
         custom={isNext}
       >
         <Row
+          className="each-slider"
           variants={rowVariants}
           initial="hidden"
           animate="visible"
