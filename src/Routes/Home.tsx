@@ -5,6 +5,8 @@ import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import {
   getNowPlayingMovies,
+  getPopularMovies,
+  getToprateMovies,
   getUpComingMovies,
   IGetMoviesResult,
   IMovie,
@@ -42,24 +44,58 @@ function Home() {
     getUpComingMovies
   );
 
+  const { data: popular } = useQuery<IGetMoviesResult>(
+    ["movies", "popular"],
+    getPopularMovies
+  );
+
+  const { data: topRate } = useQuery<IGetMoviesResult>(
+    ["movies", "topRate"],
+    getToprateMovies
+  );
+
   return (
     <Wrapper>
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
         <>
-          <Banner banner={nowPlaying?.results[0] as IMovie} />
+          <Banner
+            banner={nowPlaying?.results[0] as IMovie}
+            detailSearchUrl={"home/banner"}
+            requestUrl={"movie"}
+          />
           <SliderArea>
             <Slider
               data={nowPlaying as IGetMoviesResult}
               title={"현재 상영 중인 영화"}
-              mediaName={"home"}
+              menuName={"home"}
+              mediaType={"movie"}
+              listType={"nowPlaying"}
             ></Slider>
 
             <Slider
               data={upComing as IGetMoviesResult}
               title={"개봉 예정 영화"}
-              mediaName={"home"}
+              menuName={"home"}
+              mediaType={"movie"}
+              listType={"upComing"}
+            ></Slider>
+
+            <Slider
+              data={popular as IGetMoviesResult}
+              title={"가장 인기있는 영화"}
+              menuName={"home"}
+              mediaType={"movie"}
+              listType={"popular"}
+            ></Slider>
+
+            <Slider
+              data={topRate as IGetMoviesResult}
+              title={"별점이 높은 영화"}
+              menuName={"home"}
+              mediaType={"movie"}
+              listType={"topRate"}
             ></Slider>
           </SliderArea>
 

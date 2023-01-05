@@ -20,7 +20,6 @@ export interface IGetMoviesResult {
   otal_pages: number;
   otal_results: number;
 }
-
 export function getNowPlayingMovies() {
   return fetch(
     `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}${LANGUAGE_REGION}`
@@ -30,5 +29,40 @@ export function getNowPlayingMovies() {
 export function getUpComingMovies() {
   return fetch(
     `${BASE_PATH}/movie/upcoming?api_key=${API_KEY}${LANGUAGE_REGION}`
+  ).then((response) => response.json());
+}
+
+export function getPopularMovies() {
+  return fetch(
+    `${BASE_PATH}/movie/popular?api_key=${API_KEY}${LANGUAGE_REGION}`
+  ).then((response) => response.json());
+}
+
+export function getToprateMovies() {
+  return fetch(
+    `${BASE_PATH}/movie/top_rated?api_key=${API_KEY}${LANGUAGE_REGION}`
+  ).then((response) => response.json());
+}
+
+export interface IGenre {
+  id: number;
+  name: string;
+}
+export interface IGetDetailData {
+  id: number;
+  original_title: string;
+  overview: string;
+  backdrop_path: string;
+  poster_path: string;
+  genres: IGenre[];
+  release_date: string;
+  runtime: number;
+  tagline?: string;
+  title?: string;
+  vote_average?: number;
+}
+export function getDetailData(requestUrl: string, movieId: number) {
+  return fetch(
+    `${BASE_PATH}/${requestUrl}/${movieId}?api_key=${API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }

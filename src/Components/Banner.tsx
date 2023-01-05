@@ -1,8 +1,10 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import styled from "styled-components";
 import { AiFillCaretRight, AiOutlineInfoCircle } from "react-icons/ai";
 import { IMovie } from "../api";
 import { makeImagePath } from "../utils";
+import Modal from "./Modal";
+import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div<{ bgphoto: string }>`
   height: 100vh;
@@ -32,13 +34,13 @@ const ButtonArea = styled.div`
   display: flex;
   gap: 10px;
 `;
-interface IBanner {
+interface IBannerBtn {
   color: string;
   bgcolor: string;
   hovercolor: string;
 }
 
-const BannerBtn = styled(motion.button)<IBanner>`
+const BannerBtn = styled(motion.button)<IBannerBtn>`
   padding: 10px;
   display: flex;
   align-items: center;
@@ -79,7 +81,19 @@ const BtnText = styled.div`
   font-weight: 400;
 `;
 
-function Banner({ banner }: { banner: IMovie }) {
+interface IBanner {
+  banner: IMovie;
+  detailSearchUrl: string;
+  requestUrl: string;
+}
+
+function Banner({ banner, detailSearchUrl, requestUrl }: IBanner) {
+  const bigMatch: PathMatch<string> | null = useMatch(`/:mediaName/banner/:id`);
+  const navigate = useNavigate();
+  const onBoxClicked = (id: number) => {
+    navigate(`/${detailSearchUrl}/${id}`);
+  };
+
   return (
     <Wrapper bgphoto={makeImagePath(banner.backdrop_path || "")}>
       <Title>{banner.title ? banner.title : banner.original_title}</Title>
@@ -99,6 +113,7 @@ function Banner({ banner }: { banner: IMovie }) {
           color={"#FFFFFF"}
           bgcolor={"rgba(107, 107, 107, 0.7)"}
           hovercolor={"rgba(107, 107, 107, 0.3)"}
+          onClick={() => onBoxClicked(banner.id)}
         >
           <BtnIcon>
             <AiOutlineInfoCircle />
@@ -106,6 +121,16 @@ function Banner({ banner }: { banner: IMovie }) {
           <BtnText>상세 정보</BtnText>
         </DetailBtn>
       </ButtonArea>
+      <AnimatePresence>
+        {bigMatch ? (
+          <Modal
+            movieId={Number(bigMatch?.params.id)}
+            listType={"bannerMovie"}
+            menuName={bigMatch.params.menuName || ""}
+            requestUrl={requestUrl}
+          />
+        ) : null}
+      </AnimatePresence>
     </Wrapper>
   );
 }

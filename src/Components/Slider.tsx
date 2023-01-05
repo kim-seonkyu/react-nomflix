@@ -71,7 +71,7 @@ const Row = styled(motion.div)`
   grid-template-columns: repeat(6, 1fr);
   width: 100%;
   left: 0;
-  margin-bottom: 3rem;
+  margin-bottom: 30px;
   clear: both;
   &:after {
     content: "";
@@ -81,6 +81,8 @@ const Row = styled(motion.div)`
 `;
 
 const Box = styled(motion.div)<{ bgphoto: string }>`
+  display: block;
+  float: left;
   background-color: white;
   background-image: url(${(props) => props.bgphoto});
   background-size: cover;
@@ -98,12 +100,12 @@ const Box = styled(motion.div)<{ bgphoto: string }>`
 `;
 
 const Info = styled(motion.div)`
+  position: relative;
+  top: 150px;
+  width: 100%;
   padding: 10px;
   background-color: ${(props) => props.theme.black.lighter};
   opacity: 0;
-  position: absolute;
-  width: 100%;
-  bottom: 0;
   h4 {
     text-align: center;
     font-size: 16px;
@@ -157,10 +159,18 @@ const offset = 6;
 interface ISlider {
   data: IGetMoviesResult;
   title: string;
-  mediaName: string;
+  menuName: string;
+  listType: string;
+  mediaType: string;
 }
 
-export default function Slider({ data, title, mediaName }: ISlider) {
+export default function Slider({
+  data,
+  title,
+  menuName,
+  listType,
+  mediaType,
+}: ISlider) {
   const [isNext, setIsNext] = useState(false);
   const [index, setIndex] = useState(0);
   const [isleaving, setIsLeaving] = useState(false);
@@ -195,11 +205,13 @@ export default function Slider({ data, title, mediaName }: ISlider) {
   };
 
   const navigate = useNavigate();
-  const onBoxClicked = (media: string, id: number) => {
-    navigate(`/${media}/${id}`);
+  const onBoxClicked = (media: string, id: number, type: string) => {
+    navigate(`/${media}/${type}/${id}`);
   };
 
-  const bigMatch: PathMatch<string> | null = useMatch(`${mediaName}/:id`);
+  const bigMatch: PathMatch<string> | null = useMatch(
+    `${menuName}/${listType}/:id`
+  );
 
   return (
     <Wrapper>
@@ -239,13 +251,13 @@ export default function Slider({ data, title, mediaName }: ISlider) {
                 initial="normal"
                 whileHover="hover"
                 transition={{ type: "tween" }}
-                layoutId={movie.id + ""}
+                layoutId={movie.id + "" + listType}
                 bgphoto={makeImagePath(
                   movie.backdrop_path || movie.poster_path,
                   "w500"
                 )}
                 onClick={() => {
-                  onBoxClicked(mediaName, movie.id);
+                  onBoxClicked(menuName, movie.id, listType);
                 }}
               >
                 <Info variants={infoVariants}>
@@ -257,7 +269,12 @@ export default function Slider({ data, title, mediaName }: ISlider) {
       </AnimatePresence>
       <AnimatePresence>
         {bigMatch ? (
-          <Modal movieId={Number(bigMatch?.params.id)} mediaName={mediaName} />
+          <Modal
+            movieId={Number(bigMatch?.params.id)}
+            listType={listType}
+            menuName={menuName}
+            requestUrl={mediaType}
+          />
         ) : null}
       </AnimatePresence>
     </Wrapper>
