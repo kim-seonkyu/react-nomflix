@@ -5,6 +5,8 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import { IGetMoviesResult } from "../api";
 import { makeImagePath } from "../utils";
 import useWindowDimensions from "../useWindowDimensions";
+import { PathMatch, useMatch, useNavigate } from "react-router-dom";
+import Modal from "./Modal";
 
 const Wrapper = styled.div`
   position: relative;
@@ -109,18 +111,17 @@ const Info = styled(motion.div)`
 `;
 
 const rowVariants = {
-  initial: (right: number) => {
+  hidden: (isNext: boolean) => {
     return {
-      x: right === 1 ? window.innerWidth + 10 : -window.innerWidth - 10,
+      x: isNext ? window.innerWidth : -window.innerWidth,
     };
   },
-  animate: {
+  visible: {
     x: 0,
-    y: 0,
   },
-  exit: (right: number) => {
+  exit: (isNext: boolean) => {
     return {
-      x: right === 1 ? -window.innerWidth - 10 : window.innerWidth + 10,
+      x: isNext ? -window.innerWidth : window.innerWidth,
     };
   },
 };
@@ -130,11 +131,11 @@ const boxVariants = {
     scale: 1,
   },
   hover: {
-    scale: 1.3,
+    scale: 1.2,
     y: -40,
     transition: {
       delay: 0.5,
-      duaration: 0.1,
+      duaration: 0.3,
       type: "tween",
     },
   },
@@ -145,7 +146,7 @@ const infoVariants = {
     opacity: 1,
     transition: {
       delay: 0.5,
-      duaration: 0.1,
+      duaration: 0.3,
       type: "tween",
     },
   },
@@ -153,74 +154,80 @@ const infoVariants = {
 
 const offset = 6;
 
-export default function Slider({
-  data,
-  title,
-}: {
+interface ISlider {
   data: IGetMoviesResult;
   title: string;
-}) {
-  const [isRight, setIsRight] = useState(1);
+  mediaName: string;
+}
+
+export default function Slider({ data, title, mediaName }: ISlider) {
+  const [isNext, setIsNext] = useState(false);
   const [index, setIndex] = useState(0);
-  const [leaving, setLeaving] = useState(false);
+  const [isleaving, setIsLeaving] = useState(false);
 
-  const toggleLeaving = (value: boolean) => {
-    setLeaving(value);
-  };
+  const toggleLeaving = () => setIsLeaving((prev) => !prev);
 
-  const changeIndex = (right: number) => {
-    if (leaving) return;
-
+  const prevIndex = () => {
     if (data) {
-      toggleLeaving(true);
-      setIsRight(right);
-      const totalMovies = data.results.length - 1;
-      const maxIndex = Math.ceil(totalMovies / offset) - 1;
+      if (isleaving) return;
 
-      right === 1
-        ? setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))
-        : setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+      const movieLength = data.results.length - 1;
+      const maxIndex = Math.ceil(movieLength / offset) - 1;
+
+      toggleLeaving();
+
+      setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
+      setIsNext(false);
+    }
+  };
+  const nextIndex = () => {
+    if (data) {
+      if (isleaving) return;
+
+      const movieLength = data.results.length - 1;
+      const maxIndex = Math.ceil(movieLength / offset) - 1;
+
+      toggleLeaving();
+
+      setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
+      setIsNext(true);
     }
   };
 
-  const width = useWindowDimensions();
-  const rowProps = {
-    variants: rowVariants,
-    initial: "initial",
-    animate: "animate",
-    exit: "exit",
-    transition: { type: "tween", duration: 1 },
-    key: index,
+  const navigate = useNavigate();
+  const onBoxClicked = (media: string, id: number) => {
+    navigate(`/${media}/${id}`);
   };
 
-  const onClickArrow = (right: number) => {
-    if (!leaving) {
-      changeIndex(right);
-    }
-  };
+  const bigMatch: PathMatch<string> | null = useMatch(`${mediaName}/:id`);
 
   return (
     <Wrapper>
       <Title>{title}</Title>
-      <LeftArrow className="arrow" onClick={() => onClickArrow(-1)}>
+      <LeftArrow className="arrow" onClick={prevIndex}>
         <AiOutlineLeft />
       </LeftArrow>
 
-      <RigthArrow className="arrow" onClick={() => onClickArrow(1)}>
+      <RigthArrow className="arrow" onClick={nextIndex}>
         <AiOutlineRight />
       </RigthArrow>
 
       <AnimatePresence
         initial={false}
-        onExitComplete={() => toggleLeaving(false)}
-        custom={isRight}
+        onExitComplete={() => toggleLeaving()}
+        custom={isNext}
       >
         <Row
-          {...rowProps}
           variants={rowVariants}
-          initial={{ x: isRight === 1 ? width + 10 : -width - 10 }}
-          animate={{ x: 0 }}
-          exit={{ x: isRight === 1 ? -width - 10 : width + 10 }}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+          transition={{
+            type: "tween",
+            duration: 1,
+          }}
+          key={index}
+          custom={isNext}
         >
           {data?.results
             .slice(1)
@@ -237,6 +244,9 @@ export default function Slider({
                   movie.backdrop_path || movie.poster_path,
                   "w500"
                 )}
+                onClick={() => {
+                  onBoxClicked(mediaName, movie.id);
+                }}
               >
                 <Info variants={infoVariants}>
                   <h4>{movie.title ? movie.title : movie.original_title}</h4>
@@ -244,6 +254,11 @@ export default function Slider({
               </Box>
             ))}
         </Row>
+      </AnimatePresence>
+      <AnimatePresence>
+        {bigMatch ? (
+          <Modal movieId={Number(bigMatch?.params.id)} mediaName={mediaName} />
+        ) : null}
       </AnimatePresence>
     </Wrapper>
   );
