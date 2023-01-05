@@ -15,13 +15,13 @@
     - Slider (영화)
     
 ## 구현 예정
-  1. Movie (Home)
+  - Movie (Home)
     - Modal (상세정보)
-  2. TV (Tv)
+  - TV (Tv)
     - Banner (배너)
     - Slider (Tv)
     - Modal (상세정보)
-  3. Search (검색)
+  - Search (검색)
     - SearchResults (검색결과)
     - SearchPage (검색결과 화면(UI))
     
