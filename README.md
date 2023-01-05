@@ -10,7 +10,7 @@
   
   
 ## 구현 
-  1. Movie (Home)
+  - Movie (Home)
     - Banner (배너)
     - Slider (영화)
     
