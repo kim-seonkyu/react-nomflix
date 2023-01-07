@@ -113,6 +113,7 @@ const ModalInfo = styled.ul`
   margin-left: -10px;
 
   li {
+    padding: 5px;
     float: left;
     .rating {
       position: relative;
@@ -134,10 +135,12 @@ const ModalInfo = styled.ul`
     position: relative;
     margin-left: 0.5rem;
     padding-left: 0.5rem;
+    padding: 5px;
   }
   li ~ li:before {
     content: "";
     position: absolute;
+    justify-content: center;
     left: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -147,7 +150,7 @@ const ModalInfo = styled.ul`
     background-color: #7e7e7e;
   }
   li:last-child:before {
-    top: 5px;
+    top: 5;
   }
 `;
 
@@ -306,12 +309,22 @@ export default function Modal({
                   <ModalInfoItem
                     datas={getYear(detailMovie?.release_date || "")}
                   />
+
+                  <ModalInfoItem
+                    datas={getYear(detailMovie?.first_air_date || "")}
+                  />
+                  <ModalInfoItem
+                    datas={getYear(detailMovie?.last_air_date || "")}
+                  />
                   <ModalInfoItem
                     datas={getYear(
                       detailMovie?.runtime ? `${detailMovie.runtime}분` : ""
                     )}
                   />
                   <ModalInfoItem datas={getGenre(detailMovie?.genres || [])} />
+                  <ModalInfoItem
+                    datas={`총 ${detailMovie?.number_of_seasons} 시즌` || ""}
+                  />
                   {detailMovie?.vote_average ? (
                     <li>
                       <ReactStars

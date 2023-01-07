@@ -100,7 +100,7 @@ const Box = styled(motion.div)<{ bgphoto: string }>`
 
 const Info = styled(motion.div)`
   position: relative;
-  top: 150px;
+  top: 170px;
   width: 100%;
   padding: 10px;
   background-color: ${(props) => props.theme.black.lighter};
@@ -261,7 +261,13 @@ export default function Slider({
                 }}
               >
                 <Info variants={infoVariants}>
-                  <h4>{movie.title ? movie.title : movie.original_title}</h4>
+                  <h4>
+                    {movie.title
+                      ? movie.title
+                      : movie.original_title || movie.name
+                      ? movie.name
+                      : movie.original_name}
+                  </h4>
                 </Info>
               </Box>
             ))}

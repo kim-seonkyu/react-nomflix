@@ -13,6 +13,8 @@ function App() {
         <Route path="/home/:listType/:id" element={<Home />}></Route>
         <Route path="/home/banner/:id" element={<Home />}></Route>
         <Route path="/tv" element={<Tv />} />
+        <Route path="/tv/:listType/:id" element={<Tv />}></Route>
+        <Route path="/tv/banner/:id" element={<Tv />}></Route>
         <Route path="/search" element={<Search />} />
       </Routes>
     </Router>

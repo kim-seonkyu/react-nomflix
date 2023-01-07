@@ -8,6 +8,8 @@ export interface IMovie {
   title: string;
   original_title: string;
   overview: string;
+  name: string;
+  original_name: string;
 }
 
 export interface IGetMoviesResult {
@@ -17,8 +19,8 @@ export interface IGetMoviesResult {
   };
   page: number;
   results: IMovie[];
-  otal_pages: number;
-  otal_results: number;
+  total_pages: number;
+  total_results: number;
 }
 // Home - nowplaying Movie
 export function getNowPlayingMovies() {
@@ -55,16 +57,45 @@ export interface IGetDetailData {
   overview: string;
   backdrop_path: string;
   poster_path: string;
+  homepage: string;
   genres: IGenre[];
-  release_date: string;
+  release_date?: string;
   runtime: number;
   tagline?: string;
   title?: string;
   vote_average?: number;
+  number_of_seasons?: number;
+  first_air_date?: string;
+  last_air_date?: string;
 }
 // modal - detaildata
 export function getDetailData(requestUrl: string, movieId: number) {
   return fetch(
     `${BASE_PATH}/${requestUrl}/${movieId}?api_key=${API_KEY}${LANGUAGE_REGION}`
+  ).then((response) => response.json());
+}
+
+// TV - Airing_today
+export function getAiringTodayTv() {
+  return fetch(
+    `${BASE_PATH}/tv/airing_today?api_key=${API_KEY}${LANGUAGE_REGION}`
+  ).then((response) => response.json());
+}
+// TV - On The Air
+export function getOnTheAirTv() {
+  return fetch(
+    `${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}${LANGUAGE_REGION}`
+  ).then((response) => response.json());
+}
+// TV - Top Rate
+export function getTopRateTv() {
+  return fetch(
+    `${BASE_PATH}/tv/top_rated?api_key=${API_KEY}${LANGUAGE_REGION}`
+  ).then((response) => response.json());
+}
+// TV - Popular
+export function getPopularTv() {
+  return fetch(
+    `${BASE_PATH}/tv/popular?api_key=${API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
