@@ -227,11 +227,11 @@ export default function Modal({
   );
 
   interface IModalItem {
-    datas: string | number;
+    data: string | number;
   }
 
-  function ModalInfoItem({ datas }: IModalItem) {
-    return <>{datas ? <li>{datas}</li> : null}</>;
+  function ModalInfoItem({ data }: IModalItem) {
+    return <>{data ? <li>{data}</li> : null}</>;
   }
 
   const getYear = (data: string) => {
@@ -307,7 +307,7 @@ export default function Modal({
                 </ModalInfoTitle>
                 <ModalInfo>
                   <ModalInfoItem
-                    datas={getYear(
+                    data={getYear(
                       detailMovie?.release_date
                         ? detailMovie?.release_date
                         : detailMovie?.last_air_date || ""
@@ -315,13 +315,13 @@ export default function Modal({
                   />
 
                   <ModalInfoItem
-                    datas={getYear(
+                    data={getYear(
                       detailMovie?.runtime ? `${detailMovie.runtime}분` : ""
                     )}
                   />
-                  <ModalInfoItem datas={getGenre(detailMovie?.genres || [])} />
+                  <ModalInfoItem data={getGenre(detailMovie?.genres || [])} />
                   <ModalInfoItem
-                    datas={`총 ${detailMovie?.number_of_seasons} 시즌` || ""}
+                    data={`총 ${detailMovie?.number_of_seasons} 시즌` || ""}
                   />
                   {detailMovie?.vote_average ? (
                     <li>
