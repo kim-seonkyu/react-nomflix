@@ -307,15 +307,13 @@ export default function Modal({
                 </ModalInfoTitle>
                 <ModalInfo>
                   <ModalInfoItem
-                    datas={getYear(detailMovie?.release_date || "")}
+                    datas={getYear(
+                      detailMovie?.release_date
+                        ? detailMovie?.release_date
+                        : detailMovie?.last_air_date || ""
+                    )}
                   />
 
-                  <ModalInfoItem
-                    datas={getYear(detailMovie?.first_air_date || "")}
-                  />
-                  <ModalInfoItem
-                    datas={getYear(detailMovie?.last_air_date || "")}
-                  />
                   <ModalInfoItem
                     datas={getYear(
                       detailMovie?.runtime ? `${detailMovie.runtime}분` : ""
