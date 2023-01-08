@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import {
   getNowPlayingMovies,
@@ -23,6 +24,18 @@ const Loader = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Logo = styled(motion.svg)`
+  margin-right: 50px;
+  width: 95px;
+  height: 25px;
+  fill: ${(props) => props.theme.red};
+  cursor: pointer;
+  path {
+    stroke-width: 6px;
+    stroke: white;
+  }
 `;
 
 const SliderArea = styled.div`
@@ -54,7 +67,15 @@ function Home() {
   return (
     <Wrapper>
       {isLoading ? (
-        <Loader>Loading...</Loader>
+        <Loader>
+          <Logo
+            xmlns="http://www.w3.org/2000/svg"
+            width="1024"
+            height="276.742"
+            viewBox="0 0 1024 276.742"
+          ></Logo>
+          Loading...
+        </Loader>
       ) : (
         <>
           <Banner
