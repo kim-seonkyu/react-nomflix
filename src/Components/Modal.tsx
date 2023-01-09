@@ -141,16 +141,13 @@ const ModalInfo = styled.ul`
     content: "";
     position: absolute;
     justify-content: center;
-    left: 0;
-    top: 50%;
+    top: 10px;
+    left: -5px;
     transform: translateY(-50%);
     width: 3px;
     height: 3px;
     border-radius: 50%;
     background-color: #7e7e7e;
-  }
-  li:last-child:before {
-    top: 5;
   }
 `;
 
@@ -321,7 +318,11 @@ export default function Modal({
                   />
                   <ModalInfoItem data={getGenre(detailMovie?.genres || [])} />
                   <ModalInfoItem
-                    data={`총 ${detailMovie?.number_of_seasons} 시즌` || ""}
+                    data={
+                      detailMovie?.number_of_seasons
+                        ? `총 ${detailMovie?.number_of_seasons} 시즌` || ""
+                        : ""
+                    }
                   />
                   {detailMovie?.vote_average ? (
                     <li>
