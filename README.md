@@ -21,8 +21,6 @@
     - Banner (배너)
     - Slider (영화)
     - Modal (상세정보)
-    
-## 구현 예정
   - TV (Tv)
     - Banner (배너)
     - Slider (Tv)
@@ -30,4 +28,12 @@
   - Search (검색)
     - SearchResults (검색결과)
     - SearchPage (검색결과 화면(UI))
+    
+## 구현 예정
+  - Search (검색)
+    - Search section (구분)
+      - Search Keywords
+      - Search Movies
+      - Search TV Shows
+     
     
