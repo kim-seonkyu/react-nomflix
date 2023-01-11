@@ -31,8 +31,8 @@
     
 ## 구현 예정
   - Search (검색)
+    - Search Keywords
     - Search section (구분)
-      - Search Keywords
       - Search Movies
       - Search TV Shows
      
