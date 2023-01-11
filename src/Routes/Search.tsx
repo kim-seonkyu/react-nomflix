@@ -32,6 +32,12 @@ const SearchResults = styled.div`
   padding: 0px 58px;
 `;
 
+/* 
+  Search Keyword 추가 - Search Keywords API (추천하는 검색어)  
+  Movie Section 추가 - Search TV Shows API 
+  Tv Section 추가 - Search Movies API
+*/
+
 function Search() {
   const location = useLocation();
   const keyword = new URLSearchParams(location.search).get("keyword");
