@@ -119,7 +119,6 @@ const ModalInfo = styled.ul`
       position: relative;
       display: inline-block;
       margin-top: -2px;
-      height: 24px;
       overflow: hidden;
     }
     .ratingValue {

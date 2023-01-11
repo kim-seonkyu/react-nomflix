@@ -99,3 +99,27 @@ export function getPopularTv() {
     `${BASE_PATH}/tv/popular?api_key=${API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
+
+interface ISearch {
+  id: number;
+  title?: string;
+  original_title?: string;
+  name?: string;
+  original_name?: string;
+  overview: string;
+  backdrop_path?: string;
+  poster_path?: string;
+  media_type: string;
+}
+export interface ISearchResult {
+  page: number;
+  results: ISearch[];
+  total_pages: number;
+  total_results: number;
+}
+
+export function getSearchData(keyword: string) {
+  return fetch(
+    `${BASE_PATH}/search/multi?api_key=${API_KEY}${LANGUAGE_REGION}&query=${keyword}`
+  ).then((response) => response.json());
+}

@@ -15,12 +15,20 @@ const Wrapper = styled.div<{ bgphoto: string }>`
   background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1)),
     url(${(props) => props.bgphoto});
   background-size: cover;
+  @media screen and (max-width: 1000px) {
+    height: 60%;
+    min-height: 800px;
+    padding: 30px;
+  }
 `;
 
 const Title = styled.h2`
   font-size: 48px;
   margin-bottom: 20px;
   font-weight: 900;
+  @media screen and (max-width: 1000px) {
+    font-size: 30px;
+  }
 `;
 
 const Overview = styled.p`
@@ -28,6 +36,9 @@ const Overview = styled.p`
   width: 50%;
   font-weight: 600;
   margin-bottom: 20px;
+  @media screen and (max-width: 1000px) {
+    font-size: 15px;
+  }
 `;
 
 const ButtonArea = styled.div`
@@ -96,7 +107,7 @@ function Banner({ banner, detailSearchUrl, requestUrl }: IBanner) {
 
   return (
     <Wrapper bgphoto={makeImagePath(banner.backdrop_path || "")}>
-      <Title>{banner.title ? banner.title : banner.original_title}</Title>
+      <Title>{banner.title ? banner.title : banner.name}</Title>
       <Overview>{banner.overview}</Overview>
       <ButtonArea>
         <PlayBtn

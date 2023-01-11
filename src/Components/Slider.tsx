@@ -23,6 +23,9 @@ const Title = styled.div`
   padding-left: 20px;
   font-weight: 600;
   padding-bottom: 10px;
+  @media screen and (max-width: 1000px) {
+    font-size: 20px;
+  }
 `;
 
 const ArrowBtn = styled.div`
@@ -45,13 +48,17 @@ const ArrowBtn = styled.div`
     color: #000;
     background-color: #fff;
   }
-  &:blur {
-    color: #fff;
-    background-color: #000;
-  }
   svg {
     width: 28px;
     height: 28px;
+  }
+  @media screen and (max-width: 1000px) {
+    width: 40px;
+    height: 40px;
+    svg {
+      width: 18px;
+      height: 18px;
+    }
   }
 `;
 
