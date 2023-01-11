@@ -260,7 +260,7 @@ export default function Slider({
                 transition={{ type: "tween" }}
                 layoutId={movie.id + "" + listType}
                 bgphoto={makeImagePath(
-                  movie.backdrop_path || movie.poster_path,
+                  movie.poster_path || movie.backdrop_path,
                   "w500"
                 )}
                 onClick={() => {

@@ -114,7 +114,7 @@ function SearchData({ keyword }: { keyword: string }) {
               transition={{ type: "tween" }}
               layoutId={movie.id + "" + movie.media_type}
               bgphoto={makeImagePath(
-                movie.backdrop_path || movie.poster_path || "",
+                movie.poster_path || movie.backdrop_path || "",
                 "w500"
               )}
               onClick={() => {
