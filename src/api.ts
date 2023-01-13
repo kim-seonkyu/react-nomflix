@@ -123,3 +123,19 @@ export function getSearchData(keyword: string) {
     `${BASE_PATH}/search/multi?api_key=${API_KEY}${LANGUAGE_REGION}&query=${keyword}`
   ).then((response) => response.json());
 }
+
+interface ISearchWord {
+  name: string;
+  id: number;
+}
+export interface ISearchWords {
+  page: number;
+  results: ISearchWord[];
+  total_pages: number;
+  total_results: number;
+}
+export function getSearchKeyword(keyword: string) {
+  return fetch(
+    `${BASE_PATH}/search/keyword?api_key=${API_KEY}&query=${keyword}`
+  ).then((response) => response.json());
+}
