@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { getSearchData, ISearchResult } from "../api";
 import { makeImagePath } from "../utils";
+import { MdSearchOff } from "react-icons/md";
 
 const Row = styled(motion.div)`
   position: absolute;
@@ -103,7 +104,7 @@ function SearchData({ keyword }: { keyword: string }) {
 
   return (
     <>
-      {searchData && searchData?.results.length > 0 ? (
+      {searchData && searchData?.results.length !== 0 ? (
         <Row>
           {searchData?.results.map((movie) => (
             <Box
@@ -114,7 +115,7 @@ function SearchData({ keyword }: { keyword: string }) {
               transition={{ type: "tween" }}
               layoutId={movie.id + "" + movie.media_type}
               bgphoto={makeImagePath(
-                movie.poster_path || movie.backdrop_path || "",
+                movie.backdrop_path || movie.poster_path || "",
                 "w500"
               )}
               onClick={() => {
@@ -135,6 +136,7 @@ function SearchData({ keyword }: { keyword: string }) {
         </Row>
       ) : (
         <NoData>
+          <MdSearchOff />
           <p>
             <strong>"{keyword}" 검색 결과가 없습니다</strong>
           </p>

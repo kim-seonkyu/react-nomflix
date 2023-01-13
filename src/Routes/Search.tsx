@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   /* overflow-x: hidden; */
 `;
 
-const SearchWord = styled.form`
+const SearchWord = styled.div`
   color: white;
   display: flex;
   align-content: center;

@@ -7,7 +7,7 @@ import Modal from "./Modal";
 import { PathMatch, useMatch, useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div<{ bgphoto: string }>`
-  height: 100vh;
+  height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

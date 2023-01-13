@@ -92,7 +92,7 @@ const Box = styled(motion.div)<{ bgphoto: string }>`
   background-color: white;
   background-image: url(${(props) => props.bgphoto});
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   width: 100%;
   height: 200px;
   font-size: 30px;
@@ -260,7 +260,7 @@ export default function Slider({
                 transition={{ type: "tween" }}
                 layoutId={movie.id + "" + listType}
                 bgphoto={makeImagePath(
-                  movie.poster_path || movie.backdrop_path,
+                  movie.backdrop_path || movie.poster_path,
                   "w500"
                 )}
                 onClick={() => {
