@@ -36,4 +36,4 @@
   - Search section (구분)
     - Search Movies
     - Search TV Shows
-  - Search keyword (다음과 관련된 콘텐츠 클릭한 keyword로 검색 결과 변경)
+  - Search keyword (다음과 관련된 콘텐츠 - 클릭한 keyword로 검색 결과 변경)
