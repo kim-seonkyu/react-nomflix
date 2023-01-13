@@ -42,7 +42,7 @@ const SearchWord = styled.div`
   align-content: center;
   justify-content: center;
   width: 100%;
-  padding: 50px 0px;
+  padding: 10px 0px;
   p {
     display: flex;
     padding-top: 30px;
