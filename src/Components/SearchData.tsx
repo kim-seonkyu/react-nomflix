@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { getSearchData, ISearchResult } from "../api";
 import { makeImagePath } from "../utils";
 import { MdSearchOff } from "react-icons/md";
+import { CiImageOff } from "react-icons/ci";
 
 const Row = styled(motion.div)`
   position: absolute;
@@ -19,6 +20,12 @@ const Row = styled(motion.div)`
     content: "";
     display: block;
     clear: both;
+  }
+  .noImg {
+    background-color: white;
+    color: black;
+    width: 100%;
+    height: 100%;
   }
 `;
 
@@ -122,15 +129,19 @@ function SearchData({ keyword }: { keyword: string }) {
                 onBoxClicked(movie.id, movie.media_type);
               }}
             >
-              <Info variants={infoVariants}>
-                <h4>
-                  {movie.title
-                    ? movie.title
-                    : movie.original_title || movie.name
-                    ? movie.name
-                    : movie.original_name}
-                </h4>
-              </Info>
+              {movie.backdrop_path || movie.poster_path ? (
+                <Info variants={infoVariants}>
+                  <h4>
+                    {movie.title
+                      ? movie.title
+                      : movie.original_title || movie.name
+                      ? movie.name
+                      : movie.original_name}
+                  </h4>
+                </Info>
+              ) : (
+                <CiImageOff className="noImg" />
+              )}
             </Box>
           ))}
         </Row>
