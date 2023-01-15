@@ -138,9 +138,10 @@ function Header() {
   }, [scrollY, navAnimation]);
 
   const navigate = useNavigate();
-  const { register, handleSubmit } = useForm<IForm>();
+  const { register, handleSubmit, setValue } = useForm<IForm>();
   const onValid = (data: IForm) => {
     navigate(`/search?keyword=${data.keyword}`);
+    setValue("keyword", "");
   };
   return (
     <Nav variants={navVariants} animate={navAnimation} initial={"top"}>

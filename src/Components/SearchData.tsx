@@ -11,6 +11,7 @@ import {
 import { makeImagePath } from "../utils";
 import { MdSearchOff } from "react-icons/md";
 import { CiImageOff } from "react-icons/ci";
+import { useForm } from "react-hook-form";
 
 const Row = styled(motion.div)`
   position: absolute;
@@ -46,7 +47,7 @@ const SearchWord = styled.div`
   p {
     display: flex;
     padding-top: 30px;
-    padding-bottom: 50px;
+    padding-bottom: 10px;
     align-content: center;
     justify-content: center;
     strong {
@@ -54,6 +55,22 @@ const SearchWord = styled.div`
       font-size: 20px;
     }
   }
+`;
+
+const Form = styled.form`
+  width: 100%;
+`;
+
+const Input = styled.input`
+  padding: 5px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  float: right;
+  z-index: -1;
+  color: white;
+  font-size: 16px;
+  background-color: transparent;
+  border: 1px solid ${(props) => props.theme.white.lighter};
 `;
 
 const KeywordInfo = styled.ul`
@@ -114,7 +131,7 @@ const NoData = styled.div`
   position: absolute;
   top: 39%;
   transform: translateY(-50%);
-  padding-top: 80px;
+  margin-top: 50vh;
   width: 100%;
   text-align: center;
   font-size: 60px;
@@ -147,6 +164,10 @@ const infoVariants = {
   },
 };
 
+interface ISearchForm {
+  keywordSearch: string;
+}
+
 function SearchData({ keyword }: { keyword: string }) {
   const { data: searchData } = useQuery<ISearchResult>(
     ["search", keyword],
@@ -164,6 +185,13 @@ function SearchData({ keyword }: { keyword: string }) {
     navigate(`/search/${menuName}/${id}?keyword=${keyword}`);
   };
 
+  const { register, handleSubmit, setValue } = useForm<ISearchForm>();
+
+  const onValid = (data: ISearchForm) => {
+    navigate(`/search?keyword=${data.keywordSearch}`);
+    setValue("keywordSearch", "");
+  };
+
   return (
     <>
       {searchData && searchData?.results.length !== 0 ? (
@@ -172,7 +200,9 @@ function SearchData({ keyword }: { keyword: string }) {
             <p>
               <strong>"{keyword}"</strong> 으로 검색한 결과입니다
             </p>
-
+            <Form onSubmit={handleSubmit(onValid)}>
+              <Input type="text" {...register("keywordSearch")} />
+            </Form>
             {searchKeyword?.results.length !== 0 ? (
               <>
                 <KeywordLabel>다음과 관련된 콘텐츠 : </KeywordLabel>
