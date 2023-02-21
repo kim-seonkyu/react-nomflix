@@ -1,4 +1,4 @@
-const API_KEY = "3717b6c632b8434e14bd5345d2d24397";
+const { API_KEY } = process.env;
 const BASE_PATH = "https://api.themoviedb.org/3";
 const LANGUAGE_REGION = "&language=ko-KR&region=kr";
 export interface IMovie {

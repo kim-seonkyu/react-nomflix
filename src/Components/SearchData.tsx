@@ -171,7 +171,8 @@ interface ISearchForm {
 function SearchData({ keyword }: { keyword: string }) {
   const { data: searchData } = useQuery<ISearchResult>(
     ["search", keyword],
-    () => getSearchData(keyword || "")
+    () => getSearchData(keyword || ""),
+    { useErrorBoundary: true }
   );
 
   const { data: searchKeyword } = useQuery<ISearchWords>(

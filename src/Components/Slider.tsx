@@ -121,7 +121,7 @@ const Info = styled(motion.div)`
 const rowVariants = {
   hidden: (isNext: boolean) => {
     return {
-      x: isNext ? window.innerWidth : -window.innerWidth,
+      x: isNext ? -window.innerWidth - 5 : window.innerWidth + 5,
     };
   },
   visible: {
@@ -129,7 +129,7 @@ const rowVariants = {
   },
   exit: (isNext: boolean) => {
     return {
-      x: isNext ? -window.innerWidth : window.innerWidth,
+      x: isNext ? window.innerWidth + 5 : -window.innerWidth - 5,
     };
   },
 };
@@ -177,7 +177,7 @@ export default function Slider({
   listType,
   mediaType,
 }: ISlider) {
-  const [isNext, setIsNext] = useState(false);
+  const [isNext, setIsNext] = useState(true);
   const [index, setIndex] = useState(0);
   const [isleaving, setIsLeaving] = useState(false);
 
@@ -191,9 +191,9 @@ export default function Slider({
       const maxIndex = Math.ceil(movieLength / offset) - 1;
 
       toggleLeaving();
+      setIsNext(false);
 
       setIndex((prev) => (prev === 0 ? maxIndex : prev - 1));
-      setIsNext(false);
     }
   };
   const nextIndex = () => {
@@ -204,9 +204,9 @@ export default function Slider({
       const maxIndex = Math.ceil(movieLength / offset) - 1;
 
       toggleLeaving();
+      setIsNext(true);
 
       setIndex((prev) => (prev === maxIndex ? 0 : prev + 1));
-      setIsNext(true);
     }
   };
 
@@ -231,12 +231,11 @@ export default function Slider({
       </RigthArrow>
 
       <AnimatePresence
-        initial={false}
-        onExitComplete={() => toggleLeaving()}
         custom={isNext}
+        initial={false}
+        onExitComplete={toggleLeaving}
       >
         <Row
-          className="each-slider"
           variants={rowVariants}
           initial="hidden"
           animate="visible"
