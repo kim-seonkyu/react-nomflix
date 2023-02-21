@@ -1,6 +1,6 @@
 # Netflix Clone
 
-#### URL : https://kim-seonkyu.github.io/react-nomflix/
+#### [Khflix](https://kyunha-kim.github.io/react-nomflix/)
 
 ![Home](https://user-images.githubusercontent.com/64760329/210740884-5409ba8a-3164-434a-9c24-eb1bbff73207.png)
 
