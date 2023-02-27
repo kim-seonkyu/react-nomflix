@@ -1,8 +1,8 @@
 {
-  "homepage": "https://kyunha-kim.github.io/react-nomflix",
   "name": "react-nomflix",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@tanstack/react-query": "^4.20.4",
     "@testing-library/jest-dom": "^5.16.5",
@@ -32,9 +32,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -53,8 +51,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "gh-pages": "^4.0.0"
   }
 }
