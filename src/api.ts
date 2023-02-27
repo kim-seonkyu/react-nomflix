@@ -1,4 +1,4 @@
-const API_KEY: string = process.env.REACT_APP_API_KEY ?? "";
+const { REACT_APP_API_KEY } = process.env;
 const BASE_PATH = "https://api.themoviedb.org/3";
 const LANGUAGE_REGION = "&language=ko-KR&region=kr";
 export interface IMovie {
@@ -25,25 +25,25 @@ export interface IGetMoviesResult {
 // Home - nowplaying Movie
 export function getNowPlayingMovies() {
   return fetch(
-    `${BASE_PATH}/movie/now_playing?api_key=${API_KEY}${LANGUAGE_REGION}`
+    `${BASE_PATH}/movie/now_playing?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
 // Home - upcoming Movie
 export function getUpComingMovies() {
   return fetch(
-    `${BASE_PATH}/movie/upcoming?api_key=${API_KEY}${LANGUAGE_REGION}`
+    `${BASE_PATH}/movie/upcoming?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
 // Home - popular Movie
 export function getPopularMovies() {
   return fetch(
-    `${BASE_PATH}/movie/popular?api_key=${API_KEY}${LANGUAGE_REGION}`
+    `${BASE_PATH}/movie/popular?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
 // Home - top_rated Movie
 export function getToprateMovies() {
   return fetch(
-    `${BASE_PATH}/movie/top_rated?api_key=${API_KEY}${LANGUAGE_REGION}`
+    `${BASE_PATH}/movie/top_rated?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
 
@@ -71,32 +71,32 @@ export interface IGetDetailData {
 // modal - detaildata
 export function getDetailData(requestUrl: string, movieId: number) {
   return fetch(
-    `${BASE_PATH}/${requestUrl}/${movieId}?api_key=${API_KEY}${LANGUAGE_REGION}`
+    `${BASE_PATH}/${requestUrl}/${movieId}?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
 
 // TV - Airing_today
 export function getAiringTodayTv() {
   return fetch(
-    `${BASE_PATH}/tv/airing_today?api_key=${API_KEY}${LANGUAGE_REGION}`
+    `${BASE_PATH}/tv/airing_today?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
 // TV - On The Air
 export function getOnTheAirTv() {
   return fetch(
-    `${BASE_PATH}/tv/on_the_air?api_key=${API_KEY}${LANGUAGE_REGION}`
+    `${BASE_PATH}/tv/on_the_air?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
 // TV - Top Rate
 export function getTopRateTv() {
   return fetch(
-    `${BASE_PATH}/tv/top_rated?api_key=${API_KEY}${LANGUAGE_REGION}`
+    `${BASE_PATH}/tv/top_rated?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
 // TV - Popular
 export function getPopularTv() {
   return fetch(
-    `${BASE_PATH}/tv/popular?api_key=${API_KEY}${LANGUAGE_REGION}`
+    `${BASE_PATH}/tv/popular?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}`
   ).then((response) => response.json());
 }
 
@@ -120,7 +120,7 @@ export interface ISearchResult {
 
 export function getSearchData(keyword: string) {
   return fetch(
-    `${BASE_PATH}/search/multi?api_key=${API_KEY}${LANGUAGE_REGION}&query=${keyword}`
+    `${BASE_PATH}/search/multi?api_key=${REACT_APP_API_KEY}${LANGUAGE_REGION}&query=${keyword}`
   ).then((response) => response.json());
 }
 
@@ -136,6 +136,6 @@ export interface ISearchWords {
 }
 export function getSearchKeyword(keyword: string) {
   return fetch(
-    `${BASE_PATH}/search/keyword?api_key=${API_KEY}&query=${keyword}`
+    `${BASE_PATH}/search/keyword?api_key=${REACT_APP_API_KEY}&query=${keyword}`
   ).then((response) => response.json());
 }
